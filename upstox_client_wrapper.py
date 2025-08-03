@@ -2,8 +2,8 @@ import logging
 from upstox_client import ApiClient, Configuration
 from upstox_client.rest import ApiException
 from upstox_client.api import OrderApiV3
-from upstox_client.MarketQuoteV3Api import MarketQuoteV3Api
-from upstox_client.SessionApiV3 import SessionApiV3
+from upstox_client.api import MarketQuoteV3Api
+from upstox_client.apiV3 import SessionApiV3
 
 logger = logging.getLogger(__name__)
 
@@ -128,4 +128,5 @@ if __name__ == "__main__":
 
     # Place a test order - Be VERY careful running real orders:
     # Example: client.place_order(instrument_token=12345, quantity=1, transaction_type="BUY")
+
 
