@@ -26,7 +26,7 @@ class UpstoxClientWrapper:
         # API endpoints
         self.order_api = OrderApiV3(self.api_client)
         self.market_api = MarketQuoteV3Api(self.api_client)
-        self.session_api = SessionApiV3(self.api_client)
+        self.session_api = UserApi(self.api_client)
 
     def get_profile(self):
         """
@@ -128,6 +128,7 @@ if __name__ == "__main__":
 
     # Place a test order - Be VERY careful running real orders:
     # Example: client.place_order(instrument_token=12345, quantity=1, transaction_type="BUY")
+
 
 
 
