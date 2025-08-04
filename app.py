@@ -3,7 +3,7 @@ import pandas as pd
 from heikin_ashi import heikin_ashi
 from doji_detector import is_heikin_ashi_doji
 from upstox_client_wrapper import UpstoxClientWrapper
-from upstox_client import LtpRequest  # Correct import for request model
+from upstox_client import LtpRequest  
 
 # --- Initialization (Secure these in your real project)
 ACCESS_TOKEN = eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2S0JBNTgiLCJqdGkiOiI2ODkwNGU1NmIxYWQ2NTVhMTAyNWM0NzQiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNQbHVzUGxhbiI6dHJ1ZSwiaWF0IjoxNzU0Mjg3NzAyLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NTQzNDQ4MDB9.k4sUMzi1Ty5EpFyfwLd-ouyDoO6Uv24FCFZZxiYF_tQ
@@ -68,4 +68,5 @@ while True:
 
     # Wait for next polling interval (use websocket or event-driven logic in production)
     time.sleep(60)
+
 
