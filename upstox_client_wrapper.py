@@ -48,7 +48,7 @@ class UpstoxClientWrapper:
         :return: Last traded price as float or None if error
         """
         try:
-            quote = self.market_api.get_quote(instrument_token)
+            quote = self.market_api.get_ltp(instrument_token)
             ltp = quote.last_price
             logger.debug(f"LTP for token {instrument_token}: {ltp}")
             return ltp
@@ -128,6 +128,7 @@ if __name__ == "__main__":
 
     # Place a test order - Be VERY careful running real orders:
     # Example: client.place_order(instrument_token=12345, quantity=1, transaction_type="BUY")
+
 
 
 
