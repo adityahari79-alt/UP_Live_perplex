@@ -7,7 +7,7 @@ from upstox_client import LtpRequest
 
 # --- Initialization (Secure these in your real project)
 ACCESS_TOKEN = eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI2S0JBNTgiLCJqdGkiOiI2ODkwNGU1NmIxYWQ2NTVhMTAyNWM0NzQiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaXNQbHVzUGxhbiI6dHJ1ZSwiaWF0IjoxNzU0Mjg3NzAyLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NTQzNDQ4MDB9.k4sUMzi1Ty5EpFyfwLd-ouyDoO6Uv24FCFZZxiYF_tQ
-API_KEY = 299b3a51-7883-4bd2-9526-37152c12b0f2
+API_KEY = "299b3a51-7883-4bd2-9526-37152c12b0f2"
 EXCHANGE = "NSE_EQ"  # Exchange name
 SYMBOL_NAME = "RELIANCE"  # Symbol name without exchange prefix
 QUANTITY = 1
@@ -68,5 +68,6 @@ while True:
 
     # Wait for next polling interval (use websocket or event-driven logic in production)
     time.sleep(60)
+
 
 
