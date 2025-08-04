@@ -3,11 +3,13 @@ import pandas as pd
 from heikin_ashi import heikin_ashi
 from doji_detector import is_heikin_ashi_doji
 from upstox_client_wrapper import UpstoxClientWrapper
+from upstox_client.model.ltp_request import LtpRequest
 
 # --- Initialization (Secure these in your real project)
 ACCESS_TOKEN = "your-access-token"
 API_KEY = "your-api-key"
-SYMBOL = "NSE_EQ|INE669E01016"  # Replace with actual Upstox symbol string
+EXCHANGE = "NSE_EQ"  # Exchange name
+SYMBOL_NAME = "INE669E01016"  # Symbol name without exchange prefix
 QUANTITY = 1
 
 client = UpstoxClientWrapper(ACCESS_TOKEN, API_KEY)
@@ -16,11 +18,16 @@ client = UpstoxClientWrapper(ACCESS_TOKEN, API_KEY)
 ohlc_data = []
 
 while True:
-    # --- Fetch LTP (last traded price)
-    ltp_response = client.market_api.get_ltp(symbol=SYMBOL, api_version="v3")
+    # Prepare the request as per SDK expected format
+    body = LtpRequest(
+        instruments=[{"exchange": EXCHANGE, "symbol": SYMBOL_NAME}]
+    )
+
+    # Fetch LTP (last traded price)
+    ltp_response = client.market_api.get_ltp(body=body)
     try:
-        quote = ltp_response.data[SYMBOL].last_traded_price
-    except (AttributeError, KeyError):
+        quote = ltp_response.data[0].last_traded_price
+    except (AttributeError, IndexError, KeyError):
         print("Skipping, unable to fetch quote.")
         time.sleep(5)
         continue
@@ -36,6 +43,7 @@ while True:
         "Datetime": now,
     }
     ohlc_data.append(ohlc)
+
     if len(ohlc_data) < 20:
         # Wait until enough candles for analysis
         time.sleep(60)
@@ -47,8 +55,11 @@ while True:
     latest_ha = ha_df.iloc[-1]
     if is_heikin_ashi_doji(latest_ha):
         print(f"Doji Detected at {latest_ha['Datetime']}: Attempting to BUY")
+        # Replace your instrument_token below with actual instrument token integer from your data source
+        instrument_token = 123456  # You must set this correctly
+
         order = client.place_order(
-            instrument_token=SYMBOL,
+            instrument_token=instrument_token,
             quantity=QUANTITY,
             transaction_type="BUY"
         )
