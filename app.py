@@ -3,6 +3,7 @@ import pandas as pd
 from heikin_ashi import heikin_ashi
 from doji_detector import is_heikin_ashi_doji
 from upstox_client_wrapper import UpstoxClientWrapper
+from upstox_client import LtpRequest  # Correct import for request model
 
 # --- Initialization (Secure these in your real project)
 ACCESS_TOKEN = "your-access-token"
@@ -17,15 +18,17 @@ client = UpstoxClientWrapper(ACCESS_TOKEN, API_KEY)
 ohlc_data = []
 
 while True:
-    # Prepare instruments list as required
-    instruments = [{"exchange": EXCHANGE, "symbol": SYMBOL_NAME}]
+    # Prepare the LtpRequest body as required by the SDK
+    body = LtpRequest(
+        instruments=[{"exchange": EXCHANGE, "symbol": SYMBOL_NAME}]
+    )
 
-    # Fetch LTP (last traded price)
+    # Fetch LTP (last traded price) with correct usage
     try:
-        ltp_response = client.market_api.get_ltp(instruments=instruments)
+        ltp_response = client.market_api.get_ltp(body)
         quote = ltp_response.data[0].last_traded_price
-    except (AttributeError, IndexError, KeyError):
-        print("Skipping, unable to fetch quote.")
+    except (AttributeError, IndexError, KeyError, TypeError) as e:
+        print(f"Skipping, unable to fetch quote: {e}")
         time.sleep(5)
         continue
 
